@@ -1,4 +1,5 @@
 package eu.arcangelovicedomini.kotlin8086.emulator
 
-class Instruction {
+fun main(args: Array<String>) {
+
 }
