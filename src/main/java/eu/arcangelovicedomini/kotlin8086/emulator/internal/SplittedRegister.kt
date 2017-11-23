@@ -1,22 +1,16 @@
 package eu.arcangelovicedomini.kotlin8086.emulator.internal
 
-class SplittedRegister constructor(private val splittedSize: Int) {
-    var high: Register = Register(splittedSize)
-    var low: Register = Register(splittedSize)
+class SplittedRegister constructor(private val size: Int) {
+    var high: Register = Register(size/2)
+    var low: Register = Register(size/2)
 
-    var data: Array<Boolean>
-        get () {
-            var result: Array<Boolean> = arrayOf()
-            result.plus(high.data)
-            result.plus(low.data)
-            return result
-        }
+    var data: Int = 0
+        get () = "${high.data.toString(2)}${low.data.toString(2)}".toInt(2)
         set (data) {
-            if (data.size == splittedSize * 2) {
-                high.data = data.slice(0..splittedSize).toTypedArray()
-                low.data = data.slice(splittedSize + 1..data.size).toTypedArray()
+            if (data < 2.0 pow size.toDouble()) {
+                field = data
             } else
-                throw IndexOutOfBoundsException("Data (${data.size} bit) is too short or long for this ${splittedSize * 2} bit register!")
+                throw IndexOutOfBoundsException("Data ($data) is too long for this $size bit register!")
         }
 
 

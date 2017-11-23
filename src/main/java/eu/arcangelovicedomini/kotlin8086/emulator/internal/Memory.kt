@@ -2,19 +2,13 @@ package eu.arcangelovicedomini.kotlin8086.emulator.internal
 
 class Memory constructor(val size: Int) {
 
-    var data: Array<Boolean> = arrayOf()
+    var data: Long = 0
         set(data) {
-            if (data.size == size)
-                this.data = data
+            if (data <2.0 pow size.toDouble())
+                field = data
             else
-                throw IndexOutOfBoundsException("Data (${data.size} bit) is too short or long for this $size bit memory!")
+                throw IndexOutOfBoundsException("Data ($data) is too short or long for this $size bit memory!")
         }
 
-    init {
-        for (i in 0..size) {
-            data.plus(false)
-        }
-    }
-
-    override fun toString(): String = "MEMORY[SIZE=$size,DATA={${eu.arcangelovicedomini.kotlin8086.emulator.internal.toString(data)}}]"
+    override fun toString(): String = "MEMORY[SIZE=$size,DATA={${data.toString(2)}}]"
 }
